@@ -57,6 +57,14 @@ def atualizar_perfil(user_id: int, dados: schemas.UserUpdatePerfil, db: Session 
 # Endpoint para obter dados do usuário autenticado
 @router.get("/me", response_model=schemas.UserOut)
 def get_me(current_user=Depends(get_current_active_user)):
+    # Se for o admin mockado, retorna perfil admin padrão
+    if getattr(current_user, 'username', None) == "admin":
+        return {
+            "id": 0,
+            "username": "admin",
+            "perfil": "Admin",
+            "ativo": True
+        }
     return current_user
 
 @router.post("/register", response_model=schemas.UserOut)
