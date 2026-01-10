@@ -16,7 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 app.include_router(router)
+
+# Criação automática do admin ao iniciar o backend (remover após o primeiro deploy em produção)
+try:
+    from criar_admin_backend import criar_admin
+    criar_admin()
+except Exception as e:
+    print(f"[AVISO] Não foi possível criar admin automaticamente: {e}")
 
 @app.get("/")
 def read_root():
