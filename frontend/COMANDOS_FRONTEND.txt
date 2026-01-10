@@ -1,0 +1,15 @@
+# Comandos para iniciar o frontend React
+
+# 1. Navegue até a pasta do frontend
+cd "C:\Matheus\gestao de bugs\frontend"
+
+# 2. Crie o projeto React (caso ainda não exista)
+npx create-react-app . --template cra-template-pwa
+
+# 3. Instale dependências adicionais (Material UI, axios, etc.)
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material axios
+
+# 4. Inicie o servidor de desenvolvimento
+npm start
+
+# O frontend estará disponível em http://localhost:3000
