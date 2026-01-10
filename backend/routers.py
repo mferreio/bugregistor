@@ -62,7 +62,7 @@ def get_me(current_user=Depends(get_current_active_user)):
         return {
             "id": 0,
             "username": "admin",
-            "perfil": "Admin",
+            "perfil": "admin",  # valor minúsculo, igual ao esperado pelo frontend
             "ativo": True
         }
     return current_user
