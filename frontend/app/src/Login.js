@@ -16,7 +16,8 @@ function Login({ onLogin }) {
       const params = new URLSearchParams();
       params.append('username', username);
       params.append('password', password);
-      const response = await axios.post('http://127.0.0.1:8000/login', params, {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+      const response = await axios.post(`${apiUrl}/login`, params, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
       onLogin(response.data.access_token);
