@@ -57,14 +57,6 @@ def atualizar_perfil(user_id: int, dados: schemas.UserUpdatePerfil, db: Session 
 # Endpoint para obter dados do usuário autenticado
 @router.get("/me", response_model=schemas.UserOut)
 def get_me(current_user=Depends(get_current_active_user)):
-    # Se for o admin mockado, retorna perfil admin padrão
-    if getattr(current_user, 'username', None) == "admin":
-        return {
-            "id": 0,
-            "username": "admin",
-            "perfil": "admin",  # valor minúsculo, igual ao esperado pelo frontend
-            "ativo": True
-        }
     return current_user
 
 @router.post("/register", response_model=schemas.UserOut)
@@ -76,11 +68,6 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=schemas.Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    # Admin mockado para acesso emergencial
-    if form_data.username == "admin" and form_data.password == "admin123":
-        access_token = create_access_token(data={"sub": "admin"})
-        return {"access_token": access_token, "token_type": "bearer"}
-
     user = crud.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário ou senha inválidos")

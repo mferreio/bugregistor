@@ -20,12 +20,30 @@ app.add_middleware(
 
 app.include_router(router)
 
-## Criação automática do admin ao iniciar o backend (remover após o primeiro deploy em produção)
-try:
-    from criar_admin_backend import criar_admin
-    criar_admin()
-except Exception as e:
-    print(f"[AVISO] Não foi possível criar admin automaticamente: {e}")
+
+# Criação/atualização forçada de admin real no banco ao iniciar o backend
+from database import SessionLocal
+from models import User, PerfilEnum
+from passlib.context import CryptContext
+def criar_admin_real():
+    session = SessionLocal()
+    username = "admin"
+    senha = "admin123"
+    perfil = PerfilEnum.admin
+    ativo = 1
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    hashed_password = pwd_context.hash(senha)
+    user = session.query(User).filter_by(username=username).first()
+    if user:
+        user.hashed_password = hashed_password
+        user.perfil = perfil
+        user.ativo = ativo
+    else:
+        user = User(username=username, hashed_password=hashed_password, perfil=perfil, ativo=ativo)
+        session.add(user)
+    session.commit()
+    session.close()
+criar_admin_real()
 
 @app.get("/")
 def read_root():
