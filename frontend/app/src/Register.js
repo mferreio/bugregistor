@@ -24,7 +24,8 @@ function Register({ onRegister }) {
     setError('');
     setSuccess('');
     try {
-      await axios.post('http://127.0.0.1:8000/register', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+      await axios.post(`${apiUrl}/register`, {
         username,
         password,
         perfil,
