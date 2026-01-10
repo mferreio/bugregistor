@@ -20,7 +20,7 @@ app.add_middleware(
 
 app.include_router(router)
 
-# Criação automática do admin ao iniciar o backend (remover após o primeiro deploy em produção)
+## Criação automática do admin ao iniciar o backend (remover após o primeiro deploy em produção)
 try:
     from criar_admin_backend import criar_admin
     criar_admin()
