@@ -6,7 +6,11 @@
 
 Sistema minimalista e moderno para gestão e priorização inteligente de bugs.
 
+
 ## Demonstração
+
+**Frontend online:** https://bugregistor.vercel.app/
+**Backend online:** https://bugregistor.onrender.com
 
 <!-- Adicione um print ou gif do sistema aqui -->
 <!-- ![screenshot](docs/screenshot.png) -->
@@ -31,23 +35,42 @@ Sistema minimalista e moderno para gestão e priorização inteligente de bugs.
 - Critérios e pesos configuráveis
 - Exportação CSV/PDF
 
+
 ## Como rodar o projeto
 
-### Backend
+### Acessar online
+
+- Frontend: https://bugregistor.vercel.app/
+- Backend (API): https://bugregistor.onrender.com
+
+### Rodar localmente
+
+#### Backend
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate  # ou .venv\\Scripts\\activate no Windows
+# Ative o ambiente virtual:
+# Linux/macOS:
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-### Frontend
+#### Frontend
 ```bash
 cd frontend/app
 npm install
 npm start
 ```
+
+### Comandos de produção (deploy)
+
+- O frontend está hospedado no Vercel e o backend no Render.
+- Para atualizar o deploy, basta dar push na branch master do GitHub.
+
+---
 
 ## Como contribuir
 
