@@ -29,7 +29,7 @@ def criar_admin_real():
     session = SessionLocal()
     username = "admin"
     senha = "admin123"
-    perfil = PerfilEnum.admin
+    perfil = PerfilEnum.admin  # Isso garante o valor 'Admin' (com A maiúsculo)
     ativo = 1
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(senha)
