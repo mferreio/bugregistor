@@ -24,7 +24,7 @@ class BugUpdate(BaseModel):
     frequencia: Optional[str] = None
     area: Optional[str] = None
     evidencias: Optional[str] = None
-    status: Optional[str] = None
+    status: Optional[Literal["Aberto", "Fechado", "Reaberto", "Em andamento", "Pendente", "Cancelado"]] = None
     prioridade: Optional[float] = None
     data_abertura: Optional[datetime] = None
 
@@ -77,7 +77,7 @@ class BugCreate(BugBase):
 class BugOut(BugBase):
     id: int
     data_abertura: datetime
-    status: str
+    status: Literal["Aberto", "Fechado", "Reaberto", "Em andamento", "Pendente", "Cancelado"]
     prioridade: float
 
     class Config:

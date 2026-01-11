@@ -107,7 +107,7 @@ def calcular_prioridade(bug: Bug) -> float:
     if bug.ambiente.lower() == 'produção':
         prioridade += 3
     # Penalidade por tempo em aberto (SLA: 7 dias)
-    if bug.status in [StatusEnum.novo, StatusEnum.aberto]:
+    if bug.status in [StatusEnum.aberto]:
         dias_aberto = (datetime.utcnow() - bug.data_abertura).days
         if dias_aberto > 7:
             prioridade += 2

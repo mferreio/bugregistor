@@ -206,7 +206,7 @@ function ResumoBugs({ atualizar }) {
   }
 
   const total = bugs.length;
-  const abertos = bugs.filter(b => b.status === 'Novo' || b.status === 'Aberto').length;
+  const abertos = bugs.filter(b => b.status === 'Aberto' || b.status === 'Em andamento' || b.status === 'Reaberto' || b.status === 'Pendente').length;
   const fechados = bugs.filter(b => b.status === 'Fechado').length;
   const criticos = bugs.filter(b => b.severidade === 'Crítico').length;
 
@@ -217,16 +217,16 @@ function ResumoBugs({ atualizar }) {
   })).filter(s => s.value > 0);
 
   // Por status
-  const porStatus = ['Novo','Aberto','Fechado','Reaberto'].map(st => ({
+  const porStatus = ['Aberto','Em andamento','Fechado','Reaberto','Pendente','Cancelado'].map(st => ({
     name: st,
     value: bugs.filter(b => b.status === st).length
   })).filter(s => s.value > 0);
 
   // Dados para gráficos
   const severidades = ['baixa', 'media', 'alta', 'critica'];
-  const statusList = ['aberto', 'em andamento', 'resolvido', 'fechado'];
+  const statusList = ['aberto', 'em andamento', 'fechado', 'reaberto', 'pendente', 'cancelado'];
   const coresSeveridade = ['#90caf9', '#ffb74d', '#e57373', '#d32f2f'];
-  const coresStatus = ['#1976d2', '#fbc02d', '#388e3c', '#616161'];
+  const coresStatus = ['#1976d2', '#fbc02d', '#388e3c', '#e53935', '#616161', '#757575'];
 
   const dataSeveridade = severidades.map((sev, i) => ({
     name: sev.charAt(0).toUpperCase() + sev.slice(1),
@@ -246,7 +246,7 @@ function ResumoBugs({ atualizar }) {
       </Typography>
       <Stack direction="row" spacing={3} justifyContent="center" alignItems="stretch" sx={{ mb: 3 }}>
         {/* Card: Total de Bugs */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid>
           <Fade in timeout={700}>
             <Paper elevation={1} sx={{
               p: 1.5,
@@ -276,7 +276,7 @@ function ResumoBugs({ atualizar }) {
           </Fade>
         </Grid>
         {/* Card: Críticos */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid>
           <Fade in timeout={900}>
             <Paper elevation={1} sx={{
               p: 1.5,
@@ -304,7 +304,7 @@ function ResumoBugs({ atualizar }) {
           </Fade>
         </Grid>
         {/* Card: Abertos */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid>
           <Fade in timeout={1100}>
             <Paper elevation={1} sx={{
               p: 1.5,
@@ -332,7 +332,7 @@ function ResumoBugs({ atualizar }) {
           </Fade>
         </Grid>
         {/* Card: Fechados */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid>
           <Fade in timeout={1300}>
             <Paper elevation={1} sx={{
               p: 1.5,
@@ -367,9 +367,9 @@ function ResumoBugs({ atualizar }) {
         </Box>
       )}
       {/* Últimos bugs cadastrados */}
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mt: 6, mb: 2 }}>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-          <Typography variant="h6" fontWeight={500} sx={{ flex: 1 }}>Últimos Bugs Cadastrados</Typography>
+          <Typography variant="h5" fontWeight={600} align="center" sx={{ mb: 2, flex: 1 }}>Últimos Bugs Cadastrados</Typography>
           <IconButton size="small" sx={{ ml: 1 }} onClick={e => setAnchorEl(e.currentTarget)}>
             <SettingsIcon />
           </IconButton>
@@ -438,7 +438,6 @@ function ResumoBugs({ atualizar }) {
                   onChange={e => setFiltroTabelaStatus(e.target.value)}
                 >
                   <MenuItem value="">Todos</MenuItem>
-                  <MenuItem value="novo">Novo</MenuItem>
                   <MenuItem value="aberto">Aberto</MenuItem>
                   <MenuItem value="em andamento">Em andamento</MenuItem>
                   <MenuItem value="resolvido">Resolvido</MenuItem>
@@ -533,7 +532,6 @@ function ResumoBugs({ atualizar }) {
                           size="small"
                           color={
                             bug.status === 'Fechado' ? 'success'
-                            : bug.status === 'Novo' ? 'primary'
                             : bug.status === 'Em andamento' ? 'warning'
                             : bug.status === 'Reaberto' ? 'error'
                             : 'default'

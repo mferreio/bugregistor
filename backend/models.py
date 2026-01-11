@@ -4,10 +4,12 @@ from database import Base
 import enum
 
 class StatusEnum(str, enum.Enum):
-    novo = "Novo"
     aberto = "Aberto"
     fechado = "Fechado"
     reaberto = "Reaberto"
+    em_andamento = "Em andamento"
+    pendente = "Pendente"
+    cancelado = "Cancelado"
 
 class PerfilEnum(str, enum.Enum):
     qa = "QA"
@@ -38,7 +40,7 @@ class Bug(Base):
     area = Column(String, nullable=False)
     evidencias = Column(Text, nullable=True)
     data_abertura = Column(DateTime(timezone=True), server_default=func.now())
-    status = Column(Enum(StatusEnum), default=StatusEnum.novo)
+    status = Column(Enum(StatusEnum), default=StatusEnum.aberto)
     prioridade = Column(Float, default=0)
 
 # Log de operações CRUD de bugs

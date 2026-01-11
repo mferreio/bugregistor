@@ -58,11 +58,11 @@ function exportarParaCSV(dados, colunas, nomeArquivo = 'bugs.csv') {
 // Mapeamento de status para cor e ícone
 const statusMap = {
   'aberto':   { color: 'primary', icon: <HourglassEmptyIcon fontSize="small" /> },
-  'novo':     { color: 'primary', icon: <HourglassEmptyIcon fontSize="small" /> },
   'em andamento': { color: 'warning', icon: <AutorenewIcon fontSize="small" /> },
   'fechado':  { color: 'success', icon: <CheckCircleIcon fontSize="small" /> },
   'reaberto': { color: 'error', icon: <ReplayIcon fontSize="small" /> },
   'pendente': { color: 'default', icon: <ErrorOutlineIcon fontSize="small" /> },
+  'cancelado': { color: 'default', icon: <ErrorOutlineIcon fontSize="small" /> },
 };
 
 function getStatusProps(status) {
